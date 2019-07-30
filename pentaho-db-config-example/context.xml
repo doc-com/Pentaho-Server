@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+context.xml example configuration for PostgresSQL database
+Replace the following tags to match your configuration
+<YOUR_POSTGRESQL_HOST> ... lines 14,19,24,29
+<YOUR_POSTGRESQL_PORT> ... lines 14,19,24,29
+<YOUR_HIBERNATE_USER_PASSWORD> ... lines 13,18,28
+<YOUR_PENTAHO_USER_PASSWORD> ... line 23
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<Context path="/pentaho" docbase="webapps/pentaho/">
+    <Resource name="jdbc/Hibernate" auth="Container" type="javax.sql.DataSource"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" initialSize="0" maxActive="20" maxIdle="10"
+              maxWait="10000" username="hibuser" password="<YOUR_HIBERNATE_USER_PASSWORD>" driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://<YOUR_POSTGRESQL_HOST>:<YOUR_POSTGRESQL_PORT>/hibernate" validationQuery="select 1"/>
+
+    <Resource name="jdbc/Audit" auth="Container" type="javax.sql.DataSource"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" initialSize="0" maxActive="20" maxIdle="10"
+              maxWait="10000" username="hibuser" password="<YOUR_HIBERNATE_USER_PASSWORD>" driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://<YOUR_POSTGRESQL_HOST>:<YOUR_POSTGRESQL_PORT>/hibernate" validationQuery="select 1"/>
+
+    <Resource name="jdbc/Quartz" auth="Container" type="javax.sql.DataSource"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" initialSize="0" maxActive="20" maxIdle="10"
+              maxWait="10000" username="pentaho_user" password="<YOUR_PENTAHO_USER_PASSWORD>" driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://<YOUR_POSTGRESQL_HOST>:<YOUR_POSTGRESQL_PORT>/quartz" validationQuery="select 1"/>
+
+    <Resource name="jdbc/live_logging_info" auth="Container" type="javax.sql.DataSource"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" initialSize="0" maxActive="20" maxIdle="10"
+              maxWait="10000" username="hibuser" password="<YOUR_HIBERNATE_USER_PASSWORD>" driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://<YOUR_POSTGRESQL_HOST>:<YOUR_POSTGRESQL_PORT>/hibernate?searchpath=pentaho_dilogs" validationQuery="select 1"/>
+
+</Context>
