@@ -16,9 +16,9 @@ phases:
         commands: 
             - echo Build $APPLICATION_NAME started on `date`             
             - echo Downloading files from S3... 
-            - aws s3 cp s3://doccomservers/development/pentaho/context.xml home/pentaho/pentaho-db-config/context.xml
-            - aws s3 cp s3://doccomservers/development/pentaho/quartz.properties home/pentaho/pentaho-db-config/quartz.properties
-            - aws s3 cp s3://doccomservers/development/pentaho/repository.xml home/pentaho/pentaho-db-config/repository.xml            
+            - aws s3 cp s3://doccomservers/development/pentaho/context.xml /home/pentaho/pentaho-db-config/context.xml
+            - aws s3 cp s3://doccomservers/development/pentaho/quartz.properties /home/pentaho/pentaho-db-config/quartz.properties
+            - aws s3 cp s3://doccomservers/development/pentaho/repository.xml /home/pentaho/pentaho-db-config/repository.xml            
             - echo Building the Docker image... 
             - docker build -t $APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME . 
             - docker tag $APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME 
