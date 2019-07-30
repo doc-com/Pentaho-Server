@@ -16,7 +16,7 @@ phases:
         commands: 
             - echo Build $APPLICATION_NAME started on `date`             
             - echo Downloading files from S3... 
-            - aws s3 cp s3://doccomservers/development/pentaho/ /home/pentaho/pentaho-db-config/ --recursive            
+            - aws s3 cp s3://doccomservers/development/pentaho/ ./home/pentaho/pentaho-db-config/ --recursive            
             - echo Building the Docker image... 
             - docker build -t $APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME . 
             - echo Tagging the Docker image... $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME 
