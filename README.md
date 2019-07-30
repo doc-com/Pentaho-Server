@@ -9,6 +9,8 @@ $ docker run --name my-bi-server -p 8080:8080 -d pentaho-server:tag
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+For this image to work, put your modified config files in the "pentaho-db-config" directory(repository.xml, quartz.properties & context.xml, read on for instructions on how to edit these files)
+
 When using a custom db environment it's necessary to create the db users, tables and schemas that Pentaho needs. You can find the PostgreSQL scripts in the postgresql-db-scripts directory. For other database engines you can find the corresponding scripts within the Pentaho Community Edition distribution, under /pentaho-server/data
 
 For postgresql just run create_quartz_postgresql.sql,create_repository_postgresql.sql and create_jcr_postgresql.sql on your Postgresql DB instance
@@ -95,16 +97,7 @@ Consult your database documentation to determine the JDBC class name and connect
 
 - Save the context.xml file
 
-Now you can provide this configuration files to the docker image via the -v option
-
-To run the docker image with your own configuration files :
-```sh
-$ docker run --name my-bi-server -p 8080:8080 -d \
-    -v {/mypath/quartz.properties}:/home/pentaho/pentaho-server/pentaho-solutions/system/quartz/quartz.properties \
-    -v {/mypath/repository.xml}:/home/pentaho/pentaho-server/pentaho-solutions/system/jackrabbit/repository.xml \
-    -v {/mypath/context.xml}:/home/pentaho/pentaho-server/tomcat/webapps/pentaho/META-INF/context.xml \
-    pentaho-server:tag
-```
+For this image to work, put your modified config files in the "pentaho-db-config" directory(repository.xml, quartz.properties & context.xml, read on for instructions on how to edit these files)
 
  [PDBCONF]: <https://github.com/doc-com/PentahoServer/tree/master/pentaho-db-config>
  [PSQL]: <https://help.pentaho.com/Documentation/8.3/Setup/Use_PostgreSQL_as_your_repository_database_(Manual_installation)>

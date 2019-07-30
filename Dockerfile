@@ -32,6 +32,11 @@ RUN curl -o /home/pentaho/pentaho-server/tomcat/lib/AthenaJDBC42_2.0.7.jar https
 RUN mv /home/pentaho/startup/startup.sh /home/pentaho/pentaho-server/tomcat/bin/startup.sh
 RUN mv /home/pentaho/startup/start-pentaho.sh /home/pentaho/pentaho-server/start-pentaho.sh
 
+#Replace config files into corresponding tomcat directories
+RUN mv /home/pentaho/pentaho-db-config/quartz.properties /home/pentaho/pentaho-server/pentaho-solutions/system/quartz/quartz.properties
+RUN mv /home/pentaho/pentaho-db-config/repository.xml /home/pentaho/pentaho-server/pentaho-solutions/system/jackrabbit/repository.xml
+RUN mv /home/pentaho/pentaho-db-config/context.xml /home/pentaho/pentaho-server/tomcat/webapps/pentaho/META-INF/context.xml
+
 #Delete jackrabbit repository directory to avoid an error when starting pentaho
 RUN rm -rf /home/pentaho/pentaho-server/pentaho-solutions/system/jackrabbit/repository
 
