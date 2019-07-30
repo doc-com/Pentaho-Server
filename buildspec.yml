@@ -1,0 +1,34 @@
+version: 0.2 
+ 
+phases: 
+    install: 
+        runtime-versions: 
+            java: openjdk8 
+        commands: 
+            - echo Starting install phase... 
+        finally: 
+            - echo Ending install phase... 
+    pre_build: 
+        commands: 
+            - echo Logging in to Amazon ECR - Region $AWS_DEFAULT_REGION ... 
+            - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION) 
+    build: 
+        commands: 
+            - echo Build $APPLICATION_NAME started on `date`             
+            - echo Downloading files from S3... 
+            - aws s3 cp s3://doccomservers/development/pentaho/context.xml /home/pentaho/pentaho-db-config/context.xml
+            - aws s3 cp s3://doccomservers/development/pentaho/quartz.properties /home/pentaho/pentaho-db-config/quartz.properties
+            - aws s3 cp s3://doccomservers/development/pentaho/repository.xml /home/pentaho/pentaho-db-config/repository.xml
+            - echo Checking if files are present...
+            - ls -la
+            - echo Building the Docker image... 
+            - docker build -t $APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME . 
+            - docker tag $APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME 
+    post_build: 
+        commands: 
+            - echo Build completed on `date` 
+            - echo Pushing the Docker image... 
+            - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME 
+            - printf '[{"name":"%s","imageUri":"%s"}]' $APPLICATION_NAME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$APPLICATION_NAME:$DEPLOYMENT_GROUP_NAME > taskdefinition.json 
+artifacts: 
+    files: taskdefinition.json 
