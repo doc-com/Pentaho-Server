@@ -1,12 +1,6 @@
 # Pentaho BI Server
 This project contains a Docker Image for deploying Pentaho BI Server with Tomcat and also contains the AthenaJDBC driver to enable connections to Amazon Athena
 
-
-###How to run this image
-```sh
-$ docker run --name my-bi-server -p 8080:8080 -d pentaho-server:tag
-```
-
 !!!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 For this image to work, put your modified config files in the "pentaho-db-config" directory(repository.xml, quartz.properties & context.xml, read on for instructions on how to edit these files)
@@ -17,6 +11,10 @@ For postgresql just run create_quartz_postgresql.sql,create_repository_postgresq
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+###How to run this image
+```sh
+$ docker run --name my-bi-server -p 8080:8080 -d pentaho-server:tag
+```
 
 By default Pentaho Server uses the file-system repository but you can change it to one of the supported databases.
 
@@ -97,7 +95,7 @@ Consult your database documentation to determine the JDBC class name and connect
 
 - Save the context.xml file
 
-For this image to work, put your modified config files in the "pentaho-db-config" directory(repository.xml, quartz.properties & context.xml, read on for instructions on how to edit these files)
+For this image to work, put your modified config files in the "pentaho-db-config" directory(repository.xml, quartz.properties & context.xml)
 
  [PDBCONF]: <https://github.com/doc-com/PentahoServer/tree/master/pentaho-db-config>
  [PSQL]: <https://help.pentaho.com/Documentation/8.3/Setup/Use_PostgreSQL_as_your_repository_database_(Manual_installation)>
