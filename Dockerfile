@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:19.10
 
 WORKDIR /home/pentaho
 
