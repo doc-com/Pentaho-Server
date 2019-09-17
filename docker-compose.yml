@@ -1,0 +1,61 @@
+version: '3.7'
+volumes:
+  pentaho-vol:
+    name: pentaho-vol
+  postgres_data:
+    name: postgres_data
+services:
+  postgres-db:
+    build:
+      dockerfile: dev.Dockerfile
+      context: .
+    hostname: database.local
+    container_name: postgres-db
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pentaho_user"]
+      interval: 10s
+      timeout: 20s
+      retries: 10
+    ports:
+      - 5431:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_user
+    networks:
+      backend:
+        aliases:
+          - postgres-db
+  adminer:
+    image: adminer
+    hostname: adminer.local
+    depends_on:
+      - postgres-db
+    restart: always
+    ports:
+      - 8081:8080
+    networks:
+      backend:
+        aliases:
+          - adminer
+  pentaho:
+    hostname: pentaho.local
+    depends_on:
+      - postgres-db
+    build:
+      dockerfile: Dockerfile
+      context: '.'
+    container_name: pentaho-app
+    volumes:
+      - pentaho-vol:/home/pentaho
+    ports:
+      - 8082:8080
+    networks:
+      backend:
+        aliases:
+          - pentaho-app
+networks:
+  backend:
+    name: backend-network
