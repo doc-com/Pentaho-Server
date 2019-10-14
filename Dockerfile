@@ -38,7 +38,7 @@ RUN mv /home/pentaho/pentaho-db-config/repository.xml /home/pentaho/pentaho-serv
 RUN mv /home/pentaho/pentaho-db-config/context.xml /home/pentaho/pentaho-server/tomcat/webapps/pentaho/META-INF/context.xml
 
 #Delete jackrabbit repository directory to avoid an error when starting pentaho
-RUN rm -rf /home/pentaho/pentaho-server/pentaho-solutions/system/jackrabbit/repository
+RUN rm -rf /home/pentaho/pentaho-server/pentaho-solutions/system/jackrabbit
 
 EXPOSE 8080
 
